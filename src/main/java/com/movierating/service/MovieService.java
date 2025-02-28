@@ -27,7 +27,7 @@ public class MovieService {
     }
 
     public Movie addMovie(String title) {
-        Movie movie = new Movie.Builder().title(title).build();
+        final Movie movie = new Movie.Builder().title(title).build();
         return movieRepository.save(movie);
     }
 
@@ -41,18 +41,18 @@ public class MovieService {
     }
 
     public void addRating(Long movieId, int ratingValue) {
-        Movie movie = getMovieById(movieId);
-        Rating rating = RatingFactory.createRating(ratingValue, movie);
+        final Movie movie = getMovieById(movieId);
+        final Rating rating = RatingFactory.createRating(ratingValue, movie);
         ratingRepository.save(rating);
     }
 
     public double calculateAggregatedRating(Long movieId) {
-        Movie movie = getMovieById(movieId);
-        List<Rating> ratings = ratingRepository.findByMovie(movie);
+        final Movie movie = getMovieById(movieId);
+        final List<Rating> ratings = ratingRepository.findByMovie(movie);
         if (ratings.isEmpty()) {
             throw new ResourceNotFoundException("No ratings available for movie with id: " + movieId);
         }
-        List<Integer> ratingValues = ratings.stream()
+        final List<Integer> ratingValues = ratings.stream()
                 .map(Rating::getRating)
                 .collect(Collectors.toList());
         return ratingContext.executeStrategy(ratingValues);
@@ -62,7 +62,4 @@ public class MovieService {
         this.ratingContext = context;
     }
 
-    public RatingContext getRatingContext() {
-        return ratingContext;
-    }
 }

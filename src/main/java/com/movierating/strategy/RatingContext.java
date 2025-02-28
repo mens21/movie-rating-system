@@ -7,13 +7,9 @@ import java.util.List;
  * This is the core of the Strategy Pattern implementation.
  */
 public class RatingContext {
-    private RatingStrategy strategy;
+    private final RatingStrategy strategy;
 
     public RatingContext(RatingStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void setStrategy(RatingStrategy strategy) {
         this.strategy = strategy;
     }
 
